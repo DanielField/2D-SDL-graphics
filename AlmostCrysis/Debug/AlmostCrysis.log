@@ -1,3 +1,6 @@
 ﻿  Sprite.cpp
+  Main.cpp
+f:\almostcrysis\almostcrysis\main.cpp(50): warning C4101: 'starting_tick': unreferenced local variable
+  Generating Code...
   AlmostCrysis.vcxproj -> F:\AlmostCrysis\Debug\AlmostCrysis.exe
   AlmostCrysis.vcxproj -> F:\AlmostCrysis\Debug\AlmostCrysis.pdb (Partial PDB)

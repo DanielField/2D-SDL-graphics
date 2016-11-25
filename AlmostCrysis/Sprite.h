@@ -9,11 +9,13 @@
 
 class Sprite {
 	public:
+		SDL_Surface *image;
+		SDL_Rect *rect;
 		Sprite(Uint32 color, int x, int y, int w, int h);
 		void update(bool u, bool d, bool l, bool r);
 		void draw(SDL_Surface *destination);
 		SDL_Rect getRect();
-		void setRect(SDL_Rect rectangle);
+		void setRect(SDL_Rect *rectangle);
 		void modX(int num);
 		int getX();
 		void modY(int num);

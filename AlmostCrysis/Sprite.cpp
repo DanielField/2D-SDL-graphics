@@ -1,17 +1,14 @@
 #include "Sprite.h"
 
-SDL_Surface *image;
-SDL_Rect rect;
-
 Sprite::Sprite(Uint32 color, int x = 0, int y = 0, int w = 64, int h = 64)
 {
 	image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
 	SDL_FillRect(image, NULL, color);
 
-	rect = image->clip_rect;
+	rect = &image->clip_rect;
 
-	rect.x = x;
-	rect.y = y;
+	rect->x = x;
+	rect->y = y;
 }
 
 //
@@ -31,21 +28,21 @@ void Sprite::update(bool u, bool d, bool l, bool r)
 	}
 	else if (u)
 		setY(0);
-	if (getY() < h-rect.h && d) {
+	if (getY() < h-rect->h && d) {
 		modY(4);
 	}
 	else if (d)
-		setY(h-rect.h);
+		setY(h-rect->h);
 	if (getX() > 0 && l) {
 		modX(-4);
 	}
 	else if (l)
 		setX(0);
-	if (getX() < w - rect.w && r) {
+	if (getX() < w - rect->w && r) {
 		modX(4);
 	}
 	else if (r)
-		setX(w - rect.w);
+		setX(w - rect->w);
 }
 
 //
@@ -53,15 +50,15 @@ void Sprite::update(bool u, bool d, bool l, bool r)
 //
 void Sprite::draw(SDL_Surface *destination)
 {
-	SDL_BlitSurface(image, NULL, destination, &rect);
+	SDL_BlitSurface(image, NULL, destination, rect);
 }
 
 SDL_Rect Sprite::getRect()
 {
-	return rect;
+	return *rect;
 }
 
-void Sprite::setRect(SDL_Rect rectangle)
+void Sprite::setRect(SDL_Rect *rectangle)
 {
 	rect = rectangle;
 }
@@ -72,8 +69,8 @@ void Sprite::setRect(SDL_Rect rectangle)
 //
 void Sprite::modX(int num)
 {
-	SDL_Rect rect2 = rect;
-	rect2.x += num;
+	SDL_Rect *rect2 = rect;
+	rect2->x += num;
 	rect = rect2;
 }
 
@@ -83,32 +80,32 @@ void Sprite::modX(int num)
 //
 void Sprite::modY(int num)
 {
-	SDL_Rect rect2 = rect;
-	rect2.y += num;
+	SDL_Rect *rect2 = rect;
+	rect2->y += num;
 	rect = rect2;
 }
 
 void Sprite::setY(int num)
 {
-	SDL_Rect rect2 = rect;
-	rect2.y = num;
+	SDL_Rect *rect2 = rect;
+	rect2->y = num;
 	rect = rect2;
 }
 
 void Sprite::setX(int num)
 {
-	SDL_Rect rect2 = rect;
-	rect2.x = num;
+	SDL_Rect *rect2 = rect;
+	rect2->x = num;
 	rect = rect2;
 }
 
 int Sprite::getX()
 {
-	return rect.x;
+	return rect->x;
 }
 int Sprite::getY()
 {
-	return rect.y;
+	return rect->y;
 }
 
 SDL_Surface Sprite::getImage()

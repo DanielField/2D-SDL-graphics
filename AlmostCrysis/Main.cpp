@@ -25,7 +25,11 @@ int w = 800, h = 600; // Window dimensions
 Uint32 backColor = NULL;
 
 Uint32 blue = NULL;
+Uint32 red = NULL;
+
 Sprite *player;
+
+Sprite *enemy;
 
 bool u = false, d = false, l = false, r = false; // Booleans used for testing which key(s) are down
 
@@ -61,6 +65,8 @@ void run()
 
 	player->draw(surface);
 	player->update(u, d, l, r);
+
+	enemy->draw(surface);
 
 	SDL_UpdateWindowSurface(window);
 }
@@ -115,13 +121,14 @@ int init() {
 	);
 
 	surface = SDL_GetWindowSurface(window);
+
 	backColor = SDL_MapRGB(surface->format, 0, 0, 0); // black
 	blue = SDL_MapRGB(surface->format, 0, 0, 255); // blue
+	red = SDL_MapRGB(surface->format, 255, 0, 0); // red
 
-	player = &Sprite(blue, 10, 20, 64, 64);
-	/*SDL_Surface *p = &player->getImage();
-	p = SDL_LoadBMP("untitled.bmp");
-	player->setImage(p);*/
+	player = new Sprite(blue, 10, 20, 64, 64);
+	
+	enemy = new Sprite(red, 512, 512, 64, 64);
 
 	return 0;
 }
