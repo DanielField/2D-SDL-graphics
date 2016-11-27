@@ -3,7 +3,7 @@
 //
 //	Calls the update and event listener functions specified, and caps the framerate
 //
-void listenAndUpdate(int FPS, func f, func f2) {
+void listenAndUpdate(int FPS, function f, function f2) {
 	Uint32 starting_tick = SDL_GetTicks();
 
 	f();

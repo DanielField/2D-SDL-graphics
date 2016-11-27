@@ -12,7 +12,6 @@ class Sprite {
 		SDL_Surface *image;
 		SDL_Rect *rect;
 		Sprite(Uint32 color, int x, int y, int w, int h);
-		void update(bool u, bool d, bool l, bool r);
 		void draw(SDL_Surface *destination);
 		SDL_Rect getRect();
 		void setRect(SDL_Rect *rectangle);
@@ -24,4 +23,6 @@ class Sprite {
 		void setY(int num);
 		SDL_Surface getImage();
 		void setImage(SDL_Surface* s);
+		functionB update;
+		void setUpdateFunction(functionB update);
 };

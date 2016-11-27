@@ -57,6 +57,54 @@ int main(int argc, char* args[]) {
 }
 
 //
+//	Update the position of player depending on which button is pressed
+//  bool u: W
+//	bool l: A
+//	bool d: S
+//	bool r: D
+//
+void playerUpdate(bool u, bool d, bool l, bool r)
+{
+	if (player->getY() > 0 && u) {
+		player->modY(-4);
+	}
+	else if (u)
+		player->setY(0);
+	if (player->getY() < h - player->rect->h && d) {
+		player->modY(4);
+	}
+	else if (d)
+		player->setY(h - player->rect->h);
+	if (player->getX() > 0 && l) {
+		player->modX(-4);
+	}
+	else if (l)
+		player->setX(0);
+	if (player->getX() < w - player->rect->w && r) {
+		player->modX(4);
+	}
+	else if (r)
+		player->setX(w - player->rect->w);
+}
+
+//
+//	update the enemy position. (Moves along the x axis)
+//
+int xVel = 6;
+void enemyUpdate(bool a, bool b, bool c, bool d) {
+	if (enemy->getX() >= w - enemy->rect->w) {
+		xVel = -6;
+		enemy->setX(w - enemy->rect->w);
+	}
+	if (enemy->getX() <= 0) {
+		xVel = 6;
+		enemy->setX(0);
+	}
+	
+	enemy->modX(xVel);
+}
+
+//
 //	Draw all of the game components and update things
 //
 void run()
@@ -65,8 +113,9 @@ void run()
 
 	player->draw(surface);
 	player->update(u, d, l, r);
-
+	
 	enemy->draw(surface);
+	enemy->update(0, 0, 0, 0);
 
 	SDL_UpdateWindowSurface(window);
 }
@@ -127,8 +176,10 @@ int init() {
 	red = SDL_MapRGB(surface->format, 255, 0, 0); // red
 
 	player = new Sprite(blue, 10, 20, 64, 64);
-	
+	player->setUpdateFunction(playerUpdate);
+
 	enemy = new Sprite(red, 512, 512, 64, 64);
+	enemy->setUpdateFunction(enemyUpdate);
 
 	return 0;
 }
