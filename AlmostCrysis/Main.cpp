@@ -14,6 +14,7 @@ int init();
 void listenForEvents();
 void run();
 int exitGame();
+bool isColliding(SDL_Rect r1, SDL_Rect r2);
 
 #pragma endregion
 
@@ -39,7 +40,7 @@ bool running = true;
 
 #pragma endregion vars
 
-#define FPS 100 // Cap at 60 frames per second
+#define FPS 100 // Cap at 100 frames per second
 
 using namespace std;
 int main(int argc, char* args[]) {
@@ -85,6 +86,12 @@ void playerUpdate(bool u, bool d, bool l, bool r)
 	}
 	else if (r)
 		player->setX(w - player->rect->w);
+
+	// Collison detection
+	if (isColliding(*player->rect,*enemy->rect)) {
+		player->setX(10);
+		player->setY(10);
+	}
 }
 
 //
@@ -102,6 +109,11 @@ void enemyUpdate(bool a, bool b, bool c, bool d) {
 	}
 	
 	enemy->modX(xVel);
+}
+
+bool isColliding(SDL_Rect r1, SDL_Rect r2) {
+	return (r1.x + r1.w > r2.x && r1.x < r2.x + r2.w && // horizontal collision
+			r1.y + r1.h > r2.y && r1.y < r2.y + r2.h);  // Vertical collision
 }
 
 //
@@ -175,7 +187,7 @@ int init() {
 	blue = SDL_MapRGB(surface->format, 0, 0, 255); // blue
 	red = SDL_MapRGB(surface->format, 255, 0, 0); // red
 
-	player = new Sprite(blue, 10, 20, 64, 64);
+	player = new Sprite(blue, 10, 10, 64, 64);
 	player->setUpdateFunction(playerUpdate);
 
 	enemy = new Sprite(red, 512, 512, 64, 64);
